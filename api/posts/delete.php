@@ -1,0 +1,44 @@
+<?php
+
+// required headers
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+
+// get database connection
+include_once '../config/database.php';
+  
+// instantiate posts object
+include_once '../objects/post.php';
+
+$database = new Database();
+$db = $database->getConnection();
+  
+$posts = new Posts($db);
+
+// get posted data
+$data = json_decode(file_get_contents("php://input"));
+// set posts id to be deleted
+$posts->post_id = $data->post_id;
+
+// delete the posts
+if($posts->delete()){
+
+    //set response code - 200 ok
+    http_response_code(200);
+
+    // tell the user
+    echo json_encode(array("message" => "Post was deleted"));
+}
+//if unable to delete the posts
+else{
+    //set http response 503 service unavailable
+     http_response_code(503);
+
+     //tell the user
+     echo json_encode(array("message" =>"Unable to delete the posts"));
+}
+
