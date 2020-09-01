@@ -315,12 +315,13 @@ class Myusers{
 echo "check2";
 		
 		// execute query
-		if($stmt->execute()){
+		if($stmt2->execute() && $stmt->execute()){
 
 			echo "check";
-			$stmt2->execute();
+			
 			return true;
-		}
+		}elseif(!$stmt2->execute())
+		print_r($stmt2->errorInfo());
 		
 		return false;
 		
