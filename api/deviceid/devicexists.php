@@ -65,7 +65,7 @@ if(
 
          //tell the user
         
-         echo json_encode(array("version"=>"1","response"=>"Success","message"=>"Hi ".$row['username']."","message1"=>"your mobile number " . $arr[3] . "*******" . $arr[11] . "" . $arr[12] . " is already registered","message2"=>"you are ready enter mpin","message3"=>"" . $arr[3] . "*******" . $arr[11] . "" . $arr[12] . ""));
+         echo json_encode(array("version"=>"1","mobile"=>"".$row['mobile']."","response"=>"Success","message"=>"Hi ".$row['username']."","message1"=>"your mobile number " . $arr[3] . "*******" . $arr[11] . "" . $arr[12] . " is already registered","message2"=>"you are ready enter mpin","message3"=>"" . $arr[3] . "*******" . $arr[11] . "" . $arr[12] . ""));
  
     }elseif($stmt1->rowCount()==0){
         $sql_ex="SELECT * FROM devicestatus 

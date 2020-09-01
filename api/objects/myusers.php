@@ -241,6 +241,91 @@ class Myusers{
 			 return false;
 	 
 		 }
+		 
+		 
+		 
+		 //update Myguest Password
+	function updatePassword(){
+		// echo $this->mobile;die;
+			 //query to insert record
+			 $query = "UPDATE 
+			 ". $this->table_name ." 
+			 SET password=:password WHERE mobile=:mobile";
+	 
+			 //prepare query statement
+			 $stmt = $this->conn->prepare($query);
+			
+		 
+			 // sanitize
+			 $this->password=htmlspecialchars(strip_tags($this->password));
+			 $this->mobile=htmlspecialchars(strip_tags($this->mobile));
+			 
+			
+		 
+			 // bind values
+			 $stmt->bindParam(":password", $this->password);
+			 $stmt->bindParam(":mobile", $this->mobile);
+	 
+			 
+			 // execute query
+			 if($stmt->execute()){
+				 
+				 return true;
+			 }
+			
+			 return false;
+	 
+		 }
+
+
+		  //create Myguest with deviceid
+	function createWithDeviceId(){
+		echo $this->device_id;
+		echo $this->username;
+		//query to insert record
+		$query = "INSERT INTO 
+		". $this->table_name ." 
+		(name,username,mobile,password,dob,reg_date,f_token) VALUES (:name,:username,:mobile,:password,:dob,:reg_date,:f_token)";
+
+
+		$query2 = "INSERT INTO 
+		devicestatus 
+		(username,device_id) VALUES (:username,:device_id)";
+
+	
+		//prepare query statement
+		$stmt = $this->conn->prepare($query);
+		$stmt2 = $this->conn->prepare($query2);
+		
+	
+      
+
+		// bind values
+		$stmt->bindParam(":name", $this->name);
+		$stmt->bindParam(":username", $this->username);
+		$stmt->bindParam(":mobile", $this->mobile);
+		$stmt->bindParam(":password", $this->password);
+		$stmt->bindParam(":dob", $this->dob);
+		$stmt->bindParam(":reg_date", $this->reg_date);
+		$stmt->bindParam(":f_token", $this->f_token);
+		$stmt2->bindParam(":device_id", $this->device_id);
+		$stmt2->bindParam(":username", $this->username);
+	
+		
+echo "check2";
+		
+		// execute query
+		if($stmt->execute()){
+
+			echo "check";
+			$stmt2->execute();
+			return true;
+		}
+		
+		return false;
+		
+
+	}
 
 }
 
